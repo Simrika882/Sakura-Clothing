@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice - {{ invoice.id }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/invoice.css' %}">
+</head>
+<body>
+    <div class="invoice-container">
+        <header class="invoice-header">
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="Sakura Clothing Logo">
+            </div>
+            <h1>Invoice</h1>
+            <p>Invoice ID: <strong>{{ invoice.id }}</strong></p>
+            <p>Date: <strong>{{ invoice.created_at|date:"Y-m-d H:i" }}</strong></p>
+        </header>
+
+        <section class="customer-info">
+            <h2>Customer Information</h2>
+            <p>Name: <strong>{{ invoice.customer.name }}</strong></p>
+            <p>Email: <strong>{{ invoice.customer.email }}</strong></p>
+            {% if invoice.order.shippingaddress_set.exists %}
+                {% for address in invoice.order.shippingaddress_set.all %}
+                    <p>Address: <strong>{{ address.address }},{{ address.city }}</strong></p>
+                {% endfor %}
+            {% else %}
+                <p>No shipping address available.</p>
+            {% endif %}
+            <p>Payment Method: <strong>Cash on Delivery</strong></p>
+        </section>
+
+        <section class="order-details">
+            <h2>Order Details</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in invoice.order.orderitem_set.all %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>Rs {{ item.product.price|floatformat:2 }}</td>
+                        <td>Rs {{ item.get_total|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="total-amount">
+                <h3>Total Amount: Rs {{ invoice.total_amount|floatformat:2 }}</h3>
+            </div>
+        </section>
+
+        <footer class="invoice-footer">
+            <p>Thank you for your purchase!</p> 
+            <button onclick="window.print()">Print Invoice</button>
+            <p>Contact Us: +977 9826036403 | info@sakuraclothing.com</p>  
+        </footer>
+    </div>
+</body>
+</html>

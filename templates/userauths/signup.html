@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sakura Clothing</title>
+
+    <!-- This line of code is for the icon. -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/sakura_ico.ico' %}">
+
+    <!-- These lines of code are for the font. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <!-- These lines of code are for linking the CSS. -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+    <div class="wrapper" style="background-image: url('{% static 'images/background.jpg' %}');">
+        <div class="inner">
+            <div class="image-holder">
+                <img src="{% static 'images/registration-form.jpg' %}" alt="Registration Form">
+            </div>
+            <form action="{% url 'userauths:signup' %}" method="POST">  
+                {% csrf_token %}
+                <h3>Sign Up</h3>
+
+                <!-- Display form errors -->
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                <div class="form-group">
+                    {{ form.first_name }} 
+                    {{ form.last_name }}  
+                </div>
+                <div class="form-wrapper">
+                    {{ form.username }}  
+                    <i class="zmdi zmdi-account"></i>
+                </div>
+                <div class="form-wrapper">
+                    {{ form.email }} 
+                    <i class="zmdi zmdi-email"></i>
+                </div>
+                <div class="form-wrapper">
+                    {{ form.gender }} 
+                    <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+                </div>
+                <div class="form-wrapper">
+                    {{ form.password1 }} 
+                    <i class="zmdi zmdi-lock"></i>
+                </div>
+                <div class="form-wrapper">
+                    {{ form.password2 }}  
+                    <i class="zmdi zmdi-lock"></i>
+                </div>
+                <button type="submit" class="btn">
+                    Sign Up 
+                    <i class="zmdi zmdi-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>  
+</body>
+</html>

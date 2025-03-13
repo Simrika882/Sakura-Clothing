@@ -1,0 +1,124 @@
+.col-lg-4 {
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.box-element {
+    font-family: "Roboto", sans-serif;
+    box-shadow: hsl(0, 0%, 80%) 0 0 16px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.btn-a {
+    background: transparent;
+    border: 2px solid #ec407a;
+    padding: 12px 25px; 
+    font-size: 16px;
+    font-weight: bold;
+    color: #ec407a;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    white-space: nowrap; 
+    height: auto; 
+    border-radius: 8px;
+}
+
+.btn-a:hover {
+    background: #ec407a;
+    border: 2px solid white;
+    color: white;
+}
+
+.col-lg-6 {
+    margin-top: 10px;
+}
+
+.form-field {
+    width: 300px;
+    display: inline-block;
+    padding: 10px;
+    height: 10px;
+    margin-bottom: 15px; 
+    box-sizing: border-box;
+}
+
+.btn {
+    background: transparent;
+    border: 2px solid #ec407a;
+    padding: 8px 15px; /* Increased padding for a better look */
+    font-size: 16px;
+    font-weight: bold;
+    color: #ec407a;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Adjust space between arrow and text */
+    text-align: center;
+    white-space: nowrap; /* Prevents text from wrapping */
+    height: auto; /* Makes sure the button has proper height */
+    border-radius: 8px;
+
+}
+
+.row {
+    margin: 0 50px;
+    gap: 50px;
+    display: flex;
+}
+
+.row-image {
+    width: 100px;
+}
+
+.cart-row {
+    display: flex;
+    align-items: flex-stretch;
+    padding-bottom: 10px;
+    margin-bottom: 10px; /* Remove or adjust this to reduce gap */
+    border-bottom: 1px solid #ececec;
+}
+
+.quantity {
+    display: inline-block;
+    font-weight: 700;
+    padding-right: 10px;
+}
+
+.chg-quantity {
+    width: 12px;
+    cursor: pointer;
+    display: block;
+    margin-top: 5px;
+    transition: .1s;
+}
+
+.chg-quantity:hover {
+    opacity: .6;
+}
+
+.hidden {
+    display: none !important;
+}
+
+body {
+    background-color: hsl(0, 0%, 98%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: hsl(0, 0%, 30%);
+}
+
+.box-element2 {
+    width: 960px;
+    font-family: "Roboto", sans-serif;
+    box-shadow: hsl(0, 0%, 80%) 0 0 16px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+}

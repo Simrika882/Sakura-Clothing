@@ -1,0 +1,46 @@
+.display{
+    padding: 30px;
+    justify-content: center;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.box {
+    padding: 5px;
+    justify-content: center;
+    width: 300px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden; 
+}
+.box img {
+    z-index: 0;
+    width: 100%;
+}
+
+.box .hover {
+    position: relative;
+}
+
+button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background-color: pink;
+    border: 0;
+    outline: 0;
+    border-radius: 25px;
+    font-size: 16px;
+    padding: 10px 20px;
+    display: none;
+    justify-self: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.box:hover button {
+    display: block;
+}

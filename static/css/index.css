@@ -1,0 +1,110 @@
+/* These codes are for text settings that were designed for this page. */
+h1{
+    font-size: 50px;
+    margin: 40px 0px ;
+}
+h2{
+    color: #FEE6D2;
+    font-size: 48px;
+    position: absolute;
+    padding: 250px 0px 0px 250px;
+    z-index: 1;
+}
+h3{
+    font-size: 40px;
+    color: white;
+    position: absolute;
+    padding-top: 500px;
+    padding-left: 30px;
+}
+h4{
+    font-size: 35px;
+    text-align: center;
+}
+p{
+    font-size: 24px;
+    text-align: center;
+}
+
+/* This code is for the button. */
+.btn-a{
+    font-size: 20px;
+    position: absolute;
+    color: white;
+    margin-top: 550px;
+    margin-left: 20px;
+}
+div img{
+    width: 100%;
+}
+
+/* These codes are for the images.  */
+.hero img{
+    width: 100%;
+}
+
+/* These codes are for the services section. */
+.our-services{
+    text-align: center;
+}
+.our-services h1{
+    font-weight: 700;
+
+    color: #f5548d;
+}
+.services{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.box{
+    box-shadow: 5px 5px 10px #2d2d2d;
+    border-radius: 8px;
+}
+
+
+/* these codes are for the secondary button. */
+.button2{
+    position: relative ;
+    left: 45%;
+    font-size: 32px;
+    text-decoration: none;
+    padding: 8px 24px;
+    border-radius: 8px;
+    background-color: #F2F1F1;
+    width: fit-content;
+    margin-top: 30px;
+}
+
+/* this section of code is for image slider in hero section.  */
+
+#slider{
+    z-index: 1;
+}
+@keyframes slidy {
+    0% { left: 0%; }
+    20% { left: 0%; }
+    25% { left: -100%; }
+    45% { left: -100%; }
+    50% { left: -200%; }
+    70% { left: -200%; }
+    75% { left: -300%; }
+    95% { left: -300%; }
+    100% { left: -400%; }
+    }
+    
+    body { margin: 0; } 
+    div#slider { overflow: hidden; }
+    div#slider figure img { width: 20%; float: left; }
+    div#slider figure { 
+      position: relative;
+      width: 500%;
+      margin: 0;
+      left: 0;
+      text-align: left;
+      font-size: 0;
+      animation: 10s slidy infinite; 
+    }
+
+

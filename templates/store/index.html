@@ -1,0 +1,43 @@
+{% extends 'store/base.html' %} 
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+{% endblock %}
+{% block content %}
+    <!-- This section of code is for the hero section. Normal heading, paragraph and image coder are written here. -->
+    <section class="hero spacing">
+        <!-- this is for image slider. -->
+        <div id="slider">
+            <figure>
+                <img src="{% static 'images/slider/slider1.jpg' %}" alt="Slider Image 1">
+                <img src="{% static 'images/slider/slider2.png' %}" alt="Slider Image 2">
+                <img src="{% static 'images/slider/slider3.jpg' %}" alt="Slider Image 3">
+                <img src="{% static 'images/slider/slider4.jpg' %}" alt="Slider Image 4">
+            </figure>
+        </div>
+    </section>
+
+    <!-- This section of code is for the overall view of the our services page with shortcut buttons to take you to that page. -->
+    <section class="our-services spacing">
+        <h1>SHOP BY CATEGORY</h1>
+        <div class="services">
+            <div class="box">
+                <h3>JEANS</h3>
+                <a class="btn-a button" href="{% url 'jeans' %}">Shop now</a>
+                <img src="{% static 'images/index/jeans.png' %}" alt="Jeans">
+            </div>
+            <div class="box">
+                <h3>CLOTHES</h3>
+                <a class="btn-a button" href="{% url 'clothes' %}">Shop now</a>
+                <img src="{% static 'images/index/clothes.png' %}" alt="Outerwear">
+            </div>
+            <div class="box">
+                <h3>ACCESSORIES</h3>
+                <a class="btn-a button" href="{% url 'accessories' %}">Shop now</a>
+                <img src="{% static 'images/index/accessories.png' %}" alt="Accessories">
+            </div>
+        </div>
+    </section>
+    {% endblock content %}
+
+    

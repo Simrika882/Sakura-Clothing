@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakura Clothing</title>
+
+    <!-- This line of code is for the icon. -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/sakura_ico.ico' %}">
+
+    <!-- These lines of code are for the font. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <!-- These lines of code are for linking the CSS. -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    {% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/product.css' %}">  
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    {% endblock %}
+
+    <script type="text/javascript">
+		var user = '{{request.user}}'
+
+		function getToken(name) {
+		    var cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        var cookies = document.cookie.split(';');
+		        for (var i = 0; i < cookies.length; i++) {
+		            var cookie = cookies[i].trim();
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                break;
+		            }
+		        }
+		    }
+		    return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken')
+
+		function getCookie(name) {
+		    var cookieArr = document.cookie.split(";");
+		    for(var i = 0; i < cookieArr.length; i++) {
+		        var cookiePair = cookieArr[i].split("=");
+		        if(name == cookiePair[0].trim()) {
+		            return decodeURIComponent(cookiePair[1]);
+		        }
+		    }
+		    return null;
+		}
+		var cart = JSON.parse(getCookie('cart'))
+
+		if (cart == undefined){
+			cart = {}
+			console.log('Cart Created!', cart)
+			document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+		}
+		console.log('Cart:', cart)
+	
+	</script>
+</head>
+<body>
+
+    <!-- This code is for the navigation bar. -->
+    <header class="navigation">
+        <div class="logo">
+            <a href="{% url 'index' %}">
+                <img src="{% static 'images/logo.png' %}" alt="Sakura Clothing Logo">
+            </a>
+        </div>
+        <div class="category">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'jeans' %}">Jeans</a></li>
+                    <li><a href="{% url 'clothes' %}">Clothes</a></li>
+                    <li><a href="{% url 'shoes' %}">Shoes</a></li>
+                    <li><a href="{% url 'accessories' %}">Accessories</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="search-bar">
+            <form method="get" action="{% url 'search' %}" class="search-form">
+                <input type="text" name="query" placeholder="Search products..." required class="search-input">
+                <button type="submit" style="display: none;">Search</button>
+                <img src="{% static 'images/search-icon.png' %}" 
+                     alt="Search" class="search-icon" onclick="this.closest('form').submit()">
+            </form>
+        </div>
+        <div class="cart">
+            <nav>
+                <ul>
+                    <a href="{% url 'cart' %}">
+                        <img  id="cart-icon" src="{% static 'images/cart.png' %}">
+                    </a>
+                    <p id="cart-total">{{cartItems}}</p>
+                </ul>
+            </nav>
+        </div>
+        <div class="menu">
+            <nav>
+                <ul>
+                    {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'userauths:logout' %}">Log out</a></li>
+                    {% else %}
+                    <li><a href="{% url 'userauths:login' %}">Log in</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    {% block content %}
+    {% endblock content %}
+
+    <!-- This section of code is for the footer section. -->
+    <footer>
+        <div class="divider"></div>
+        <div class=" container">
+            <div class="footer-col1">
+                <img src="{% static 'images/logo.png' %}" alt="Footer Logo">  
+                <p>Your trusted clothing brand.</p>
+                <p>Explore our latest collections.</p>
+            </div>
+            <div class="footer-col2">
+                <div class="col2-col1">
+                    <p>FIND US AT</p>
+                    <p>123 Fashion Street, Kathmandu</p>
+                </div>
+                <div class="col2-col2">
+                    <p>CONTACT US</p>
+                    <p>+977 9826036403</p>
+                    <p>info@sakuraclothing.com</p><br>
+                </div>
+            </div> 
+        </div>
+        <div class="divider"></div>
+        <div class="footer">
+            <p>© Sakura Clothing 2024 | COOKIES POLICY | PRIVACY POLICY</p>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+</body>
+</html>

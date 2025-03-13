@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakura Clothing</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/sakura_ico.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}">
+	
+    <script type="text/javascript">
+		var user = '{{request.user}}'
+
+		function getToken(name) {
+		    var cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        var cookies = document.cookie.split(';');
+		        for (var i = 0; i < cookies.length; i++) {
+		            var cookie = cookies[i].trim();
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                break;
+		            }
+		        }
+		    }
+		    return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken')
+
+		function getCookie(name) {
+		    var cookieArr = document.cookie.split(";");
+		    for(var i = 0; i < cookieArr.length; i++) {
+		        var cookiePair = cookieArr[i].split("=");
+		        if(name == cookiePair[0].trim()) {
+		            return decodeURIComponent(cookiePair[1]);
+		        }
+		    }
+		    return null;
+		}
+		var cart = JSON.parse(getCookie('cart'))
+
+		if (cart == undefined){
+			cart = {}
+			console.log('Cart Created!', cart)
+			document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+		}
+		console.log('Cart:', cart)
+	
+	</script>
+</head>
+<body>
+	<div class="wrapper" style="background-image: url('{% static 'images/background.jpg' %}');">
+		<div class="col-lg-4">
+			<div class="box-element">
+				<div class="continue top-box">
+				<a  class="btn-a button " href="{% url 'index' %}">&#x2190; Continue Shopping</a>
+				</div>
+			<div>
+				<table>
+					<tr class="checkout">
+						<div class="container">
+							<div class="right-section">
+								<strong>Items:</strong> <strong>{{order.get_cart_items}}</strong>
+							</div>
+							<div>
+								<strong>Total:</strong><strong> Rs {{order.get_cart_total|floatformat:2}}</strong>
+                            </div>	
+							<div class="left-section">
+                                <a class="btn-a button" href="{% url 'checkout' %}">Checkout</a>
+                            </div> 
+						</div>
+					</tr>
+				</table>	
+			</div>
+
+			</div>
+
+			<br>
+			<div class="box-element">
+				<div class="cart-row cart-row-1">
+					<div style="flex:2"><strong>Image</strong></div>
+					<div style="flex:2"><strong>Item</strong></div>
+					<div style="flex:1"><strong>Price</strong></div>
+					<div style="flex:1"><strong>Quantity</strong></div>
+					<div style="flex:1"><strong>Total</strong></div>
+				</div>
+				<hr>
+				{% for item in items %}
+				<div class="cart-row cart-row-2">
+					<div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+					<div style="flex:2"><p><strong>{{item.product.name}}</strong></p></div>
+					<div style="flex:1"><p><strong>Rs {{item.product.price|floatformat:2}}</strong></p></div>
+					<div style="flex:1">
+						<p class="quantity"><strong>{{item.quantity}}</strong></p>
+						<div class="quantity">
+							<img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">
+					
+							<img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
+						</div>
+					</div>
+					<div style="flex:1"><p><strong>Rs {{item.get_total|floatformat:2}}</strong></p></div>
+				</div>
+				<hr>
+				{% endfor %}
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+/* These codes are to reset the default spacings. */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* These codes are for text styles.  */
+h1, h2, h3, h4, h5, h6 , p, a{
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    color: black;
+}
+/* This code is for the background colour in all pages. */
+body{
+    background-color: white;
+}
+
+/* This code is for the spacing between two sections.  */
+.spacing{
+    margin-bottom: 50px;
+}
+
+/* These codes are for the logo in the navigation bar. */
+.logo{
+    padding-left: 0px;
+    width: 180px;
+}
+.logo img{
+    width: 100%;
+}
+
+/* These codes are for the navigation bar menu.  */
+.navigation{
+    background-color: #e4b3b7;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.navigation ul li a{
+    font-size: 25px;
+    font-weight: 700;
+    color: #f5548d;
+    text-decoration: none;
+}
+.navigation ul li a:hover{
+    font-size: 24px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+nav ul{
+    display: flex;
+    justify-content: right;
+    list-style: none;
+}
+nav ul li{
+    margin: 0 2cqi;
+}
+
+/* this code is for the dashed divider.  */
+.divider{
+    width: 100%;
+    border-top: 2px #8d7b68 dashed ;
+    margin-top: 50px;
+}
+
+.container{
+    width: 100%;
+    display: inline-flex;
+}
+
+/* This code is for the button. */
+.button{
+    text-decoration: none;
+    padding: 8px 24px;
+    border-radius: 8px;
+    background-color: #ec407a;
+}
+
+.button:hover{
+    padding:10px 30px;
+}
+/* This code is for the footer section.  */
+footer{
+    background-color: #e4b3b7;
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px;
+    bottom: 0;
+}
+.footer-col1{
+    padding: 0 30px;
+    width: 35%;
+}
+.footer-col1 img{
+    padding: 5px;
+    width: 100%;
+}
+.footer-col2{
+    padding-top: 60px;
+    padding-left: 150px;
+    width: 50%;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.footer-col2 p{
+    color: #ec407a;
+}
+footer p{
+    text-align: left;
+    font-size: 20px;
+}
+.footer p{
+    text-align: center;
+    color:#ec407a;
+}
+/* This code is for the cart.  */
+#cart-icon{
+	width:45px;
+	display: inline-block;
+	margin-left: 15px;
+}
+
+#cart-total{
+	display: block;
+	text-align: center;
+	color:white;
+	background-color:#f5548d;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-size: 15px;
+}
+/* This code is for the search.  */
+.search-bar {
+    width: 300px; 
+}
+
+.search-form {
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 40px 10px 10px;
+    box-sizing: border-box;
+    border: 2px solid  #f5548d;
+    border-radius: 4px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 20px; 
+    height: 20px; 
+}

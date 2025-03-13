@@ -1,0 +1,32 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/product.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2>Search Products</h2>
+    <form method="get" action="{% url 'search' %}">
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+
+    <h3>Results:</h3>
+    <div class="display">
+        {% for product in results %}
+            <div class="box">
+                <div class="hover">
+                    <img src="{{ product.imageURL }}" alt="{{ product.name }}">
+                    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                </div>
+                <p>Category: {{ product.category.name }}</p>
+                <h4>{{ product.name }}</h4>
+                <rs>RS {{ product.price|floatformat:2 }}</rs>
+            </div>
+        {% empty %}
+            <h3>No products found matching your search.</h3>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+

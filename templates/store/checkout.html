@@ -1,0 +1,210 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakura Clothing</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/sakura_ico.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/checkout.css' %}">
+	
+    <script type="text/javascript">
+		var user = '{{ request.user }}';
+
+		function getToken(name) {
+		    var cookieValue = null;
+		    if (document.cookie && document.cookie !== '') {
+		        var cookies = document.cookie.split(';');
+		        for (var i = 0; i < cookies.length; i++) {
+		            var cookie = cookies[i].trim();
+		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                break;
+		            }
+		        }
+		    }
+		    return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken');
+
+		function getCookie(name) {
+		    var cookieArr = document.cookie.split(";");
+		    for (var i = 0; i < cookieArr.length; i++) {
+		        var cookiePair = cookieArr[i].split("=");
+		        if (name == cookiePair[0].trim()) {
+		            return decodeURIComponent(cookiePair[1]);
+		        }
+		    }
+		    return null;
+		}
+		var cart = JSON.parse(getCookie('cart')) || {};  // Default to empty object if undefined
+
+		if (Object.keys(cart).length === 0) {
+			console.log('Cart Created!', cart);
+			document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/";
+		}
+		console.log('Cart:', cart);
+	</script>
+</head>
+<body>
+	<div class="wrapper" style="background-image: url('{% static 'images/background.jpg' %}');">
+		<div class="col-lg-4">
+			<div class="box-element">
+				<div class="continue top-box">
+					<a class="btn-a button" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="box-element" id="form-wrapper">
+					<form id="form">
+						<div id="user-info">
+							<div class="form-field">
+								<input required class="form-control" type="text" name="name" placeholder="Name..">
+							</div>
+							<hr>
+							<div class="form-field">
+								<input required class="form-control" type="email" name="email" placeholder="Email..">
+							</div>
+						</div>
+						
+						<div id="shipping-info">
+							<hr>
+							<p>Shipping Information:</p>
+							<hr>
+							<div class="form-field">
+								<input class="form-control" type="text" name="address" placeholder="Address..">
+							</div>
+							<hr>
+							<div class="form-field">
+								<input class="form-control" type="text" name="city" placeholder="City..">
+							</div>
+							<hr>
+							<div class="form-field">
+								<input class="form-control" type="text" name="state" placeholder="State..">
+							</div>
+							<hr>
+							<div class="form-field">
+								<input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+							</div>
+						</div>
+
+						<hr>
+						<input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+					</form>
+				</div>
+
+				<br>
+				<div class="box-element hidden" id="payment-info">
+					<small>Paypal Options: Cash on Delivery</small>
+					<hr>
+					<button id="make-payment">Confirm Order</button>
+				</div>			
+			</div>
+
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="box-element2">
+						<h3>Order Summary</h3>
+						<hr>
+						{% for item in items %}
+						<div class="cart-row">
+ <div style="flex:2"><img class="row-image" src="{{ item.product.imageURL }}"></div>
+							<div style="flex:2"><strong><p>{{ item.product.name }}</p></strong></div>
+							<div style="flex:2"><strong><p>Rs {{ item.product.price|floatformat:2 }}</p></strong></div>
+							<div style="flex:1"><strong><p>x{{ item.quantity }}</p></strong></div>
+						</div>
+						{% endfor %}
+						<h4>Items: {{ order.get_cart_items }}</h4>
+						<h4>Total: Rs {{ order.get_cart_total|floatformat:2 }}</h4>
+					</div>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+				var shipping = '{{ order.shipping }}';
+				var total = '{{ order.get_cart_total|floatformat:2 }}';
+
+				if (shipping == 'False') {
+					document.getElementById('shipping-info').innerHTML = '';
+				}
+
+				if (user != 'AnonymousUser  ') {
+					document.getElementById('user-info').innerHTML = '';
+				}
+
+				if (shipping == 'False' && user != 'AnonymousUser  ') {
+					document.getElementById('form-wrapper').classList.add("hidden");
+					document.getElementById('payment-info').classList.remove("hidden");
+				}
+
+				var form = document.getElementById('form');
+				form.addEventListener('submit', function(e) {
+					e.preventDefault();
+					console.log('Form Submitted...');
+					document.getElementById('form-button').classList.add("hidden");
+					document.getElementById('payment-info').classList.remove("hidden");
+				});
+
+				document.getElementById('make-payment').addEventListener('click', function(e) {
+					submitFormData();
+				});
+
+				function submitFormData() {
+					console.log('Payment button clicked');
+
+					var userFormData = {
+						'name': null,
+						'email': null,
+						'total': total,
+					};
+
+					var shippingInfo = {
+						'address': null,
+						'city': null,
+						'state': null,
+						'zipcode': null,
+					};
+
+					if (shipping != 'False') {
+						shippingInfo.address = form.address.value;
+						shippingInfo.city = form.city.value;
+						shippingInfo.state = form.state.value;
+						shippingInfo.zipcode = form.zipcode.value;
+					}
+
+					if (user == 'AnonymousUser  ') {
+						userFormData.name = form.name.value;
+						userFormData.email = form.email.value;
+					}
+
+					console.log('Shipping Info:', shippingInfo);
+					console.log('User  Info:', userFormData);
+					fetch('/process_order/', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'X-CSRFToken': csrftoken,
+						},
+						body: JSON.stringify({'form': userFormData, 'shipping': shippingInfo}),
+					})
+					.then((response) => response.json())
+					.then((data) => {
+						if (data.error) {
+							alert('Error: ' + data.error);
+						} else {
+							console.log('Success:', data);
+							alert('Your order has been placed.');
+							window.location.href = data.url;  // Redirect to invoice using the URL returned from the server
+						}
+					})
+					.catch((error) => {
+						console.error('Error:', error);
+						alert('There was an issue processing your order. Please try again.');
+					});
+				}
+			</script>
+			<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+		</body>
+	</html>

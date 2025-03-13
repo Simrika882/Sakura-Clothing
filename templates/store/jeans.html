@@ -1,0 +1,23 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/product.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="display">
+        {% for product in products %}
+        <div class="box">
+            <div class="hover">
+                <img src="{{ product.imageURL }}" alt="{{ product.name }}">
+              <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+            </div>
+            <p>Category: {{ product.category.name }}</p>
+            <h3>{{ product.name }}</h3>
+            <rs>RS {{ product.price|floatformat:2 }}</rs>
+        </div>
+        {% empty %}
+        <p>No jeans available.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
